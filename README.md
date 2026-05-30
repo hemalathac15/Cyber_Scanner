@@ -8,7 +8,8 @@ Cyber Scanner is a lightweight, local security analysis utility featuring an aut
 ## 🏗️ System Architecture
 
 The following diagram illustrates how the asynchronous test client requests tools from the FastMCP server, coordinates the FAISS local database, fetches data from the MITRE API, and queries Ollama:
-![Uploading image.png…]()
+<img width="3600" height="2400" alt="image" src="https://github.com/user-attachments/assets/31c55b19-2cfa-4ee9-bb46-fb22f2dc2d0d" />
+
 
 ## 🚀 Key Features
 
