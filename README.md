@@ -116,5 +116,76 @@ git commit -m "Docs: Update README with comprehensive setup instructions, local 
 
 # 3. Push to your live main branch
 git push origin main
+
+---
+
+## 📊 Example Pipeline Execution
+
+Here is a live sample log demonstrating the client discovering the FastMCP tools, crawling a test asset, running a semantic vector search, fetching CVE definitions, and extracting an automated mitigation package via `gemma2:2b`.
+
+<details>
+<summary><b>Click to expand full terminal log output</b></summary>
+
+```text
+Loading Embedding Model (all-MiniLM-L6-v2)....
+Starting MCP server 'Cyber-Scanner' with transport 'stdio'
+
+--- 🔍 Discovering Available MCP Tools ---
+Found Registered Tool: crawl_and_extract_signals
+Found Registered Tool: query_knowledge_layer
+Found Registered Tool: lookup_cve_ground_truth
+Found Registered Tool: generate_attack_graph
+Found Registered Tool: analyze_vulnerability_with_slm
+
+--- 🌐 Step 1: Running Smart Web Crawler ---
+Targeting URL for security signals: [https://httpbin.org](https://httpbin.org)
+{
+  "url": "[https://httpbin.org](https://httpbin.org)",
+  "method": "GET",
+  "status_code": 200,
+  "content_type": "text/html; charset=utf-8",
+  "technologies": ["nginx", "jquery", "php"]
+}
+💾 Saved structured crawler format to outputs\crawler_output.json
+
+--- 🧠 Step 2: Querying In-Memory FAISS Vector Database ---
+Executing semantic search for: 'vulnerability or security signals'
+{
+  "query_id": "q_30641",
+  "results": [
+    {
+      "doc_id": "doc_0",
+      "score": 0.36,
+      "chunk": "httpbin.org A simple HTTP Request & Response Service... Powered by Flasgger",
+      "metadata": { "vuln_type": "Context Discovery", "severity": "medium" }
+    }
+  ],
+  "total_results": 1
+}
+💾 Saved retrieval structure context matrix to outputs\retrieval_output.json
+
+--- 🛡️ Step 3: Fetching Official CVE Ground Truth ---
+Querying Mitre API for: CVE-2024-3094
+{
+  "cve_id": "CVE-2024-3094",
+  "status": "Found",
+  "source": "MITRE Ground Truth API"
+}
+
+--- 🤖 Step 5: Invoking Local SLM Intelligence Agent ---
+{
+  "query_id": "q_12345",
+  "context": [
+    {
+      "doc_id": "doc_456",
+      "source": "MITRE Ground Truth API",
+      "score": 0.92
+    }
+  ],
+  "suggested_remediations": [
+    "Implement strict input validation, upgrade affected components to the latest patched version, or deploy specific WAF rules."
+  ]
+}
+💾 Saved final context package analysis matrix to outputs\final_context_package.json
 ├── .gitignore             # Configured to exclude local venv files
 └── README.md              # Project documentation
